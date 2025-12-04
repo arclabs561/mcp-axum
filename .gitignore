@@ -1,19 +1,45 @@
 # Rust
 /target
-# Keep Cargo.lock for applications
-# Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# Cargo.lock is tracked for this library (ensures reproducible builds)
+# Standard practice: Applications track Cargo.lock, libraries typically don't
+# This project tracks it for consistency and reproducible builds
 
 # IDE
-.idea
-.vscode
+.idea/
+.vscode/
 *.swp
 *.swo
 *~
+*.sublime-project
+*.sublime-workspace
 
 # OS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+Desktop.ini
 
 # Misc
 *.log
+*.orig
+*.rej
+*.bak
+*~
+.env
+.env.local
+
+# Coverage
+tarpaulin-report.html
+cobertura.xml
+lcov.info
+*.gcda
+*.gcno
+*.gcov
 

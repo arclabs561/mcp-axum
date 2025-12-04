@@ -8,7 +8,6 @@ use axum::{
 use http_body_util::BodyExt;
 use mcp_axum::{McpServer, Tool};
 use serde_json::Value;
-use std::sync::Arc;
 use tower::util::ServiceExt;
 
 struct FailingTool {

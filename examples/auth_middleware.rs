@@ -5,12 +5,7 @@
 //! - Custom middleware
 //! - Protected endpoints
 
-use axum::{
-    extract::Request,
-    http::{HeaderMap, StatusCode},
-    middleware::Next,
-    response::Response,
-};
+use axum::{extract::Request, http::StatusCode, middleware::Next, response::Response};
 use mcp_axum::{extract_string, McpServer, Tool};
 use serde_json::Value;
 use std::{collections::HashSet, env};
@@ -48,7 +43,7 @@ impl Tool for ProtectedTool {
 }
 
 /// Authentication middleware
-async fn auth_middleware(mut request: Request, next: Next) -> Result<Response, StatusCode> {
+async fn auth_middleware(request: Request, next: Next) -> Result<Response, StatusCode> {
     let headers = request.headers();
     // Get API key from environment or use default for demo
     let valid_keys: HashSet<String> = env::var("MCP_API_KEYS")
@@ -64,11 +59,7 @@ async fn auth_middleware(mut request: Request, next: Next) -> Result<Response, S
         .ok_or(StatusCode::UNAUTHORIZED)?;
 
     // Support both "Bearer <key>" and just "<key>" formats
-    let api_key = if auth_header.starts_with("Bearer ") {
-        &auth_header[7..]
-    } else {
-        auth_header
-    };
+    let api_key = auth_header.strip_prefix("Bearer ").unwrap_or(auth_header);
 
     if !valid_keys.contains(api_key) {
         return Err(StatusCode::UNAUTHORIZED);

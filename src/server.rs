@@ -171,7 +171,9 @@ impl McpServer {
     ///
     /// ```rust,no_run
     /// # use mcp_axum::{McpServer, Resource};
+    /// # use async_trait::async_trait;
     /// # struct HelloResource;
+    /// # #[async_trait]
     /// # impl Resource for HelloResource {
     /// #     fn name(&self) -> &str { "hello" }
     /// #     fn description(&self) -> &str { "hello" }

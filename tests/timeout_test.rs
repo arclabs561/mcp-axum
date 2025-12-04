@@ -8,7 +8,6 @@ use axum::{
 use http_body_util::BodyExt;
 use mcp_axum::{McpServer, Resource, Tool};
 use serde_json::Value;
-use std::sync::Arc;
 use std::time::Duration;
 use tokio::time::sleep;
 use tower::util::ServiceExt;

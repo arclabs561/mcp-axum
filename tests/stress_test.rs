@@ -7,7 +7,6 @@ use axum::{
 };
 use mcp_axum::{McpServer, Tool};
 use serde_json::Value;
-use std::sync::Arc;
 use std::time::Instant;
 use tower::util::ServiceExt;
 

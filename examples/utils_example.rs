@@ -4,7 +4,7 @@
 //! when extracting arguments from tool calls.
 
 use async_trait::async_trait;
-use mcp_axum::{extract_integer_opt, extract_string, extract_string_opt, McpServer, Tool};
+use mcp_axum::{extract_integer_opt, extract_string, McpServer, Tool};
 use serde_json::Value;
 
 /// Example tool using utility functions for cleaner argument extraction.

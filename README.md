@@ -199,10 +199,10 @@ This library implements **HTTP transport**, enabling:
 
 ```toml
 [dependencies]
-mcp-axum = "0.1"
+mcp-axum = "0.2"
 
 # For testing utilities
-mcp-axum = { version = "0.1", features = ["testing"] }
+mcp-axum = { version = "0.2", features = ["testing"] }
 ```
 
 ## Documentation
