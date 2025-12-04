@@ -135,12 +135,15 @@ impl McpServer {
     ///
     /// ```rust,no_run
     /// # use mcp_axum::{McpServer, Tool};
+    /// # use async_trait::async_trait;
+    /// # use serde_json::Value;
     /// # struct EchoTool;
+    /// # #[async_trait]
     /// # impl Tool for EchoTool {
     /// #     fn description(&self) -> &str { "echo" }
-    /// #     fn schema(&self) -> serde_json::Value { serde_json::json!({}) }
-    /// #     async fn call(&self, _: &serde_json::Value) -> Result<serde_json::Value, String> {
-    /// #         Ok(serde_json::json!({}))
+    /// #     fn schema(&self) -> Value { Value::Null }
+    /// #     async fn call(&self, _: &Value) -> Result<Value, String> {
+    /// #         Ok(Value::Null)
     /// #     }
     /// # }
     /// let server = McpServer::new()
@@ -200,11 +203,14 @@ impl McpServer {
     ///
     /// ```rust,no_run
     /// # use mcp_axum::{McpServer, Prompt};
+    /// # use async_trait::async_trait;
+    /// # use serde_json::Value;
     /// # struct GreetingPrompt;
+    /// # #[async_trait]
     /// # impl Prompt for GreetingPrompt {
     /// #     fn description(&self) -> &str { "greeting" }
-    /// #     fn arguments(&self) -> serde_json::Value { serde_json::json!({}) }
-    /// #     async fn render(&self, _: &serde_json::Value) -> Result<String, String> {
+    /// #     fn arguments(&self) -> Value { Value::Null }
+    /// #     async fn render(&self, _: &Value) -> Result<String, String> {
     /// #         Ok("hello".to_string())
     /// #     }
     /// # }
