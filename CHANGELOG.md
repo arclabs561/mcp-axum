@@ -7,7 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-01-XX
+
 ### Added
+- **Builder pattern for registration** - Chainable `.tool()`, `.resource()`, and `.prompt()` methods for ergonomic server setup
+- **Structured error types** - `ToolError` enum for better error context and HTTP status mapping
+- **Argument extraction utilities** - Helper functions to reduce boilerplate (`extract_string`, `extract_number`, etc.)
+- **Testing utilities** - `test_tool()` helper for unit testing tools (with `testing` feature)
+- **Authentication middleware example** - API key authentication pattern for production
+- **Client integration guide** (CLIENTS.md) - Complete guide for non-Rust developers
+- **Dockerfile** - Production deployment example
+- Quick test guide in README with curl examples
+- Configuration guide (CONFIGURATION.md) for deployment
+
+### Changed
+- **Improved registration API ergonomics** - `register_tool()`, `register_resource()`, and `register_prompt()` now accept `impl Into<String>` for names and handle `Arc` internally, eliminating `.to_string()` and `Arc::new()` boilerplate
+- Improved error messages and validation
+- Enhanced documentation
+- Removed unused rate limiting configuration (simplified config to only include implemented features)
+- Removed placeholder macros.rs file (macros will be in separate crate when implemented)
+- Removed duplicate tower dependency from dev-dependencies
+
+### Added (from Unreleased)
 - Comprehensive test suite covering integration, edge cases, performance, and security
 - GitHub Actions CI workflow with check, test, and e2e jobs
 - Clippy and rustfmt configuration

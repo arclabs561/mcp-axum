@@ -123,6 +123,104 @@ impl McpServer {
         Ok(())
     }
 
+    /// Register a tool using builder pattern (chainable).
+    ///
+    /// This method allows chaining multiple registrations together.
+    ///
+    /// # Errors
+    ///
+    /// Returns `McpError::Validation` if the tool name is invalid.
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// # use mcp_axum::{McpServer, Tool};
+    /// # struct EchoTool;
+    /// # impl Tool for EchoTool {
+    /// #     fn description(&self) -> &str { "echo" }
+    /// #     fn schema(&self) -> serde_json::Value { serde_json::json!({}) }
+    /// #     async fn call(&self, _: &serde_json::Value) -> Result<serde_json::Value, String> {
+    /// #         Ok(serde_json::json!({}))
+    /// #     }
+    /// # }
+    /// let server = McpServer::new()
+    ///     .tool("echo", EchoTool)?;
+    /// # Ok::<(), mcp_axum::McpError>(())
+    /// ```
+    pub fn tool(
+        mut self,
+        name: impl Into<String>,
+        tool: impl Tool + 'static,
+    ) -> Result<Self, McpError> {
+        self.register_tool(name, tool)?;
+        Ok(self)
+    }
+
+    /// Register a resource using builder pattern (chainable).
+    ///
+    /// This method allows chaining multiple registrations together.
+    ///
+    /// # Errors
+    ///
+    /// Returns `McpError::Validation` if the resource URI is invalid.
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// # use mcp_axum::{McpServer, Resource};
+    /// # struct HelloResource;
+    /// # impl Resource for HelloResource {
+    /// #     fn name(&self) -> &str { "hello" }
+    /// #     fn description(&self) -> &str { "hello" }
+    /// #     fn mime_type(&self) -> &str { "text/plain" }
+    /// #     async fn read(&self) -> Result<String, String> { Ok("hello".to_string()) }
+    /// # }
+    /// let server = McpServer::new()
+    ///     .resource("hello://world", HelloResource)?;
+    /// # Ok::<(), mcp_axum::McpError>(())
+    /// ```
+    pub fn resource(
+        mut self,
+        name: impl Into<String>,
+        resource: impl Resource + 'static,
+    ) -> Result<Self, McpError> {
+        self.register_resource(name, resource)?;
+        Ok(self)
+    }
+
+    /// Register a prompt using builder pattern (chainable).
+    ///
+    /// This method allows chaining multiple registrations together.
+    ///
+    /// # Errors
+    ///
+    /// Returns `McpError::Validation` if the prompt name is invalid.
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// # use mcp_axum::{McpServer, Prompt};
+    /// # struct GreetingPrompt;
+    /// # impl Prompt for GreetingPrompt {
+    /// #     fn description(&self) -> &str { "greeting" }
+    /// #     fn arguments(&self) -> serde_json::Value { serde_json::json!({}) }
+    /// #     async fn render(&self, _: &serde_json::Value) -> Result<String, String> {
+    /// #         Ok("hello".to_string())
+    /// #     }
+    /// # }
+    /// let server = McpServer::new()
+    ///     .prompt("greeting", GreetingPrompt)?;
+    /// # Ok::<(), mcp_axum::McpError>(())
+    /// ```
+    pub fn prompt(
+        mut self,
+        name: impl Into<String>,
+        prompt: impl Prompt + 'static,
+    ) -> Result<Self, McpError> {
+        self.register_prompt(name, prompt)?;
+        Ok(self)
+    }
+
     /// Build the Axum router.
     ///
     /// Includes middleware for:

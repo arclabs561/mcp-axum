@@ -127,4 +127,40 @@ pub trait Tool: Send + Sync {
     /// # }
     /// ```
     async fn call(&self, arguments: &Value) -> Result<Value, String>;
+
+    /// Call the tool with structured error handling (optional).
+    ///
+    /// This method provides structured error handling using `ToolError`.
+    /// The default implementation converts `ToolError` to `String` for backward compatibility.
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// use mcp_axum::{Tool, ToolError};
+    /// use serde_json::Value;
+    ///
+    /// # struct MyTool;
+    /// # impl Tool for MyTool {
+    /// #     fn description(&self) -> &str { "test" }
+    /// #     fn schema(&self) -> Value { Value::Null }
+    /// #     async fn call(&self, _: &Value) -> Result<Value, String> {
+    /// #         Ok(Value::Null)
+    /// #     }
+    /// # }
+    /// # async fn example() -> Result<(), Box<dyn std::error::Error>> {
+    /// let tool = MyTool;
+    /// let args = serde_json::json!({"text": "hello"});
+    /// match tool.call_typed(&args).await {
+    ///     Ok(result) => println!("Success: {:?}", result),
+    ///     Err(ToolError::MissingParameter(p)) => eprintln!("Missing: {}", p),
+    ///     Err(e) => eprintln!("Error: {}", e),
+    /// }
+    /// # Ok(())
+    /// # }
+    /// ```
+    async fn call_typed(&self, arguments: &Value) -> Result<Value, crate::tool_error::ToolError> {
+        self.call(arguments)
+            .await
+            .map_err(|e| crate::tool_error::ToolError::execution_failed(e))
+    }
 }

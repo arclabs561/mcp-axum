@@ -99,4 +99,7 @@ pub use utils::{
     extract_bool, extract_bool_opt, extract_integer, extract_integer_opt, extract_number,
     extract_number_opt, extract_string, extract_string_opt,
 };
+
+// Re-export the extract macro
+pub use extract;
 pub use validation::{validate_prompt_name, validate_resource_uri, validate_tool_name};
