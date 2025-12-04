@@ -1,9 +1,8 @@
 //! Basic unit tests for MCP server components.
 
-use mcp_axum::{McpServer, Tool, Resource, Prompt};
 use async_trait::async_trait;
+use mcp_axum::{McpServer, Prompt, Resource, Tool};
 use serde_json::Value;
-use std::sync::Arc;
 
 struct TestTool;
 
@@ -96,21 +95,23 @@ async fn test_server_creation() {
 #[tokio::test]
 async fn test_tool_registration() {
     let mut server = McpServer::new();
-    server.register_tool("test".to_string(), Arc::new(TestTool)).unwrap();
+    server.register_tool("test", TestTool).unwrap();
     // Registration should not panic
 }
 
 #[tokio::test]
 async fn test_resource_registration() {
     let mut server = McpServer::new();
-    server.register_resource("test://resource".to_string(), Arc::new(TestResource)).unwrap();
+    server
+        .register_resource("test://resource", TestResource)
+        .unwrap();
     // Registration should not panic
 }
 
 #[tokio::test]
 async fn test_prompt_registration() {
     let mut server = McpServer::new();
-    server.register_prompt("test".to_string(), Arc::new(TestPrompt)).unwrap();
+    server.register_prompt("test", TestPrompt).unwrap();
     // Registration should not panic
 }
 
@@ -140,4 +141,3 @@ async fn test_prompt_render() {
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), "Hello, Alice!");
 }
-

@@ -104,7 +104,7 @@ pub fn extract_schema_from_docstring(docstring: &str) -> Value {
         if let Some(paren_start) = rest.find('(') {
             if let Some(paren_end) = rest[paren_start..].find(')') {
                 let paren_content = &rest[paren_start + 1..paren_start + paren_end];
-                
+
                 // Extract type from (type: ...) pattern
                 if let Some(type_start) = paren_content.find("type:") {
                     let type_content = &paren_content[type_start + 5..];
@@ -119,7 +119,7 @@ pub fn extract_schema_from_docstring(docstring: &str) -> Value {
                         _ => "object",
                     };
                 }
-                
+
                 // Extract default from (default: ...) pattern
                 if let Some(default_start) = paren_content.find("default:") {
                     let default_content = &paren_content[default_start + 8..];
@@ -141,7 +141,7 @@ pub fn extract_schema_from_docstring(docstring: &str) -> Value {
                 }
             }
         }
-        
+
         // If no default, parameter is required
         if default_value.is_none() {
             required.push(param_name.to_string());
@@ -149,7 +149,10 @@ pub fn extract_schema_from_docstring(docstring: &str) -> Value {
 
         // Create property schema
         let mut prop = serde_json::Map::new();
-        prop.insert("type".to_string(), serde_json::Value::String(param_type.to_string()));
+        prop.insert(
+            "type".to_string(),
+            serde_json::Value::String(param_type.to_string()),
+        );
 
         // Add description if available
         if let Some(desc_start) = rest.find('-') {
@@ -164,7 +167,10 @@ pub fn extract_schema_from_docstring(docstring: &str) -> Value {
                 .unwrap_or(desc)
                 .trim();
             if !clean_desc.is_empty() {
-                prop.insert("description".to_string(), serde_json::Value::String(clean_desc.to_string()));
+                prop.insert(
+                    "description".to_string(),
+                    serde_json::Value::String(clean_desc.to_string()),
+                );
             }
         }
 
@@ -193,4 +199,3 @@ pub fn schema_from_type(ty: &str) -> Value {
         _ => serde_json::json!({"type": "object"}),
     }
 }
-

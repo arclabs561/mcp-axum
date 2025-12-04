@@ -1,7 +1,7 @@
 //! Concurrent access and thread safety tests.
 
-use mcp_axum::{McpServer, Tool};
 use async_trait::async_trait;
+use mcp_axum::{McpServer, Tool};
 use serde_json::Value;
 use std::sync::Arc;
 use tokio::task;
@@ -49,12 +49,8 @@ async fn test_concurrent_tool_calls() {
 
     for _ in 0..100 {
         let tool_clone = Arc::clone(&tool);
-        let handle = task::spawn(async move {
-            tool_clone
-                .call(&serde_json::json!({}))
-                .await
-                .unwrap()
-        });
+        let handle =
+            task::spawn(async move { tool_clone.call(&serde_json::json!({})).await.unwrap() });
         handles.push(handle);
     }
 
@@ -74,10 +70,8 @@ async fn test_concurrent_server_registration() {
         let server_clone = Arc::clone(&server);
         let handle = task::spawn(async move {
             let mut s = server_clone.lock().await;
-            s.register_tool(
-                format!("tool_{}", i),
-                Arc::new(CounterTool::new()),
-            ).unwrap();
+            s.register_tool(format!("tool_{}", i), CounterTool::new())
+                .unwrap();
         });
         handles.push(handle);
     }
@@ -94,12 +88,12 @@ async fn test_concurrent_server_registration() {
 #[tokio::test]
 async fn test_server_clone() {
     let mut server = McpServer::new();
-    server.register_tool("tool1".to_string(), Arc::new(CounterTool::new())).unwrap();
-    
+    server.register_tool("tool1", CounterTool::new()).unwrap();
+
     let cloned = server.clone();
     let _router1 = server.router();
     let _router2 = cloned.router();
-    
+
     // Both should work independently
 }
 
@@ -107,13 +101,12 @@ async fn test_server_clone() {
 async fn test_multiple_servers_independent() {
     let mut server1 = McpServer::new();
     let mut server2 = McpServer::new();
-    
-    server1.register_tool("tool1".to_string(), Arc::new(CounterTool::new())).unwrap();
-    server2.register_tool("tool2".to_string(), Arc::new(CounterTool::new())).unwrap();
-    
+
+    server1.register_tool("tool1", CounterTool::new()).unwrap();
+    server2.register_tool("tool2", CounterTool::new()).unwrap();
+
     let _router1 = server1.router();
     let _router2 = server2.router();
-    
+
     // Should be independent
 }
-

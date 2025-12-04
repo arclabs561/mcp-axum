@@ -19,16 +19,13 @@
 //!     }
 //!
 //!     fn arguments(&self) -> Value {
-//!         json!({
-//!             "type": "object",
-//!             "properties": {
-//!                 "name": {
-//!                     "type": "string",
-//!                     "description": "Name to greet",
-//!                     "default": "World"
-//!                 }
+//!         json!([
+//!             {
+//!                 "name": "name",
+//!                 "description": "Name to greet",
+//!                 "required": false
 //!             }
-//!         })
+//!         ])
 //!     }
 //!
 //!     async fn render(&self, arguments: &Value) -> Result<String, String> {
@@ -65,7 +62,26 @@ pub trait Prompt: Send + Sync {
     /// Get the JSON Schema for the prompt's arguments.
     ///
     /// This defines what parameters the prompt accepts when rendering.
-    /// Follows the same format as `Tool::schema()`.
+    /// Returns an array of argument definitions, each with `name`, `description`, and `required` fields.
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// use serde_json::{json, Value};
+    ///
+    /// let arguments: Value = json!([
+    ///     {
+    ///         "name": "topic",
+    ///         "description": "The topic to write about",
+    ///         "required": true
+    ///     },
+    ///     {
+    ///         "name": "style",
+    ///         "description": "Writing style",
+    ///         "required": false
+    ///     }
+    /// ]);
+    /// ```
     fn arguments(&self) -> Value;
 
     /// Render the prompt with the given arguments.
@@ -95,5 +111,3 @@ pub trait Prompt: Send + Sync {
     /// ```
     async fn render(&self, arguments: &Value) -> Result<String, String>;
 }
-
-

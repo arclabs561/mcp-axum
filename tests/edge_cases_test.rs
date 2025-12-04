@@ -1,7 +1,7 @@
 //! Edge case and error handling tests.
 
-use mcp_axum::{McpServer, Tool, Resource, Prompt};
 use async_trait::async_trait;
+use mcp_axum::{McpServer, Prompt, Resource, Tool};
 use serde_json::Value;
 use std::sync::Arc;
 
@@ -178,10 +178,10 @@ async fn test_large_resource() {
 #[tokio::test]
 async fn test_multiple_registrations() {
     let mut server = McpServer::new();
-    server.register_tool("tool1".to_string(), Arc::new(EmptyTool)).unwrap();
-    server.register_tool("tool2".to_string(), Arc::new(EmptyTool)).unwrap();
-    server.register_tool("tool1".to_string(), Arc::new(EmptyTool)).unwrap(); // Overwrite
-    
+    server.register_tool("tool1", EmptyTool).unwrap();
+    server.register_tool("tool2", EmptyTool).unwrap();
+    server.register_tool("tool1", EmptyTool).unwrap(); // Overwrite
+
     let _router = server.router();
     // Should not panic
 }
@@ -196,7 +196,7 @@ async fn test_empty_server() {
 #[tokio::test]
 async fn test_tool_with_missing_required_params() {
     struct RequiredParamTool;
-    
+
     #[async_trait]
     impl Tool for RequiredParamTool {
         fn description(&self) -> &str {
@@ -234,7 +234,7 @@ async fn test_tool_with_missing_required_params() {
 #[tokio::test]
 async fn test_tool_with_extra_params() {
     struct SimpleTool;
-    
+
     #[async_trait]
     impl Tool for SimpleTool {
         fn description(&self) -> &str {
@@ -273,7 +273,7 @@ async fn test_tool_with_extra_params() {
 #[tokio::test]
 async fn test_prompt_with_empty_arguments() {
     struct EmptyPrompt;
-    
+
     #[async_trait]
     impl Prompt for EmptyPrompt {
         fn description(&self) -> &str {
@@ -302,7 +302,7 @@ async fn test_prompt_with_empty_arguments() {
 #[tokio::test]
 async fn test_resource_with_special_mime_types() {
     struct JsonResource;
-    
+
     #[async_trait]
     impl Resource for JsonResource {
         fn name(&self) -> &str {
@@ -330,4 +330,3 @@ async fn test_resource_with_special_mime_types() {
     let parsed: Value = serde_json::from_str(&content).unwrap();
     assert_eq!(parsed["key"], "value");
 }
-

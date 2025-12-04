@@ -124,4 +124,3 @@ impl IntoResponse for HttpError {
         (self.status, Json(body)).into_response()
     }
 }
-

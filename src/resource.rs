@@ -77,5 +77,3 @@ pub trait Resource: Send + Sync {
     /// consider base64 encoding or using a text-based representation.
     async fn read(&self) -> Result<String, String>;
 }
-
-

@@ -1,14 +1,14 @@
 //! Tests for request validation and schema validation.
 
-use mcp_axum::{McpServer, Tool, HttpError};
 use async_trait::async_trait;
-use serde_json::Value;
-use std::sync::Arc;
 use axum::{
     body::Body,
     http::{Request, StatusCode},
 };
 use http_body_util::BodyExt;
+use mcp_axum::{McpServer, Tool};
+use serde_json::Value;
+use std::sync::Arc;
 use tower::util::ServiceExt;
 
 struct TestTool;
@@ -48,7 +48,7 @@ impl Tool for TestTool {
 
 fn create_test_server() -> axum::Router {
     let mut server = McpServer::new();
-    server.register_tool("test_tool".to_string(), Arc::new(TestTool)).unwrap();
+    server.register_tool("test_tool", TestTool).unwrap();
     server.router()
 }
 
@@ -79,10 +79,11 @@ async fn test_schema_validation_missing_required() {
     assert_eq!(response.status(), StatusCode::BAD_REQUEST);
     let body = response.into_body().collect().await.unwrap().to_bytes();
     let json: Value = serde_json::from_slice(&body).unwrap();
-    assert!(json.get("message")
+    assert!(json
+        .get("message")
         .and_then(|v| v.as_str())
         .unwrap_or("")
-        .contains("Invalid arguments"));
+        .contains("Arguments for tool 'test_tool' failed schema validation"));
 }
 
 #[tokio::test]
@@ -112,10 +113,11 @@ async fn test_schema_validation_invalid_type() {
     assert_eq!(response.status(), StatusCode::BAD_REQUEST);
     let body = response.into_body().collect().await.unwrap().to_bytes();
     let json: Value = serde_json::from_slice(&body).unwrap();
-    assert!(json.get("message")
+    assert!(json
+        .get("message")
         .and_then(|v| v.as_str())
         .unwrap_or("")
-        .contains("Invalid arguments"));
+        .contains("Arguments for tool 'test_tool' failed schema validation"));
 }
 
 #[tokio::test]
@@ -174,4 +176,3 @@ async fn test_schema_validation_with_defaults() {
 
     assert_eq!(response.status(), StatusCode::OK);
 }
-

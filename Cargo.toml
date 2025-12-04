@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 rust-version = "1.75"
 license = "MIT OR Apache-2.0"
-description = "Axum-like framework for building Model Context Protocol (MCP) servers with auto-generated JSON Schema from docstrings"
+description = "HTTP-based MCP server framework for Rust, built on axum"
 keywords = ["mcp", "model-context-protocol", "axum", "server", "agent", "ai"]
 categories = ["web-programming", "api-bindings"]
 repository = "https://github.com/arclabs561/mcp-axum"
@@ -23,23 +23,20 @@ tokio = { version = "1", features = ["full"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 thiserror = "2"
-tower = "0.4"
+tower = { version = "0.5", features = ["util"] }
 tower-http = { version = "0.5", features = ["cors", "trace", "request-id", "limit"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 async-trait = "0.1"
 jsonschema = "0.19"
 uuid = { version = "1", features = ["v4"] }
-syn = { version = "2", features = ["full", "parsing", "extra-traits"] }
-quote = "1"
-proc-macro2 = "1"
 
 [features]
 default = []
+testing = []
 # Future: macros feature for procedural macro support via mcp-axum-macros crate
 
 [dev-dependencies]
 tokio-test = "0.4"
-tower = { version = "0.5", features = ["util"] }
 http-body-util = "0.1"
 

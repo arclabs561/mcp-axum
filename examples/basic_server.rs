@@ -3,10 +3,9 @@
 //! This example demonstrates how to create a simple MCP server with tools,
 //! resources, and prompts.
 
-use mcp_axum::{McpServer, Tool, Resource, Prompt};
 use async_trait::async_trait;
+use mcp_axum::{extract_string, extract_string_opt, McpServer, Prompt, Resource, Tool};
 use serde_json::Value;
-use std::sync::Arc;
 
 /// Example tool: Echo
 struct EchoTool;
@@ -31,11 +30,7 @@ impl Tool for EchoTool {
     }
 
     async fn call(&self, arguments: &Value) -> Result<Value, String> {
-        let text = arguments
-            .get("text")
-            .and_then(|v| v.as_str())
-            .ok_or_else(|| "Missing 'text' parameter".to_string())?;
-        
+        let text = extract_string(arguments, "text")?;
         Ok(serde_json::json!({
             "echoed": text
         }))
@@ -87,11 +82,7 @@ impl Prompt for GreetingPrompt {
     }
 
     async fn render(&self, arguments: &Value) -> Result<String, String> {
-        let name = arguments
-            .get("name")
-            .and_then(|v| v.as_str())
-            .unwrap_or("World");
-        
+        let name = extract_string_opt(arguments, "name").unwrap_or_else(|| "World".to_string());
         Ok(format!("Hello, {}!", name))
     }
 }
@@ -105,17 +96,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut server = McpServer::new();
 
     // Register tools
-    server.register_tool("echo".to_string(), Arc::new(EchoTool))?;
+    server.register_tool("echo", EchoTool)?;
 
     // Register resources
-    server.register_resource("hello://world".to_string(), Arc::new(HelloResource))?;
-    
+    server.register_resource("hello://world", HelloResource)?;
+
     // Register prompts
-    server.register_prompt("greeting".to_string(), Arc::new(GreetingPrompt))?;
+    server.register_prompt("greeting", GreetingPrompt)?;
 
     // Start server
     server.serve("127.0.0.1:8080").await?;
 
     Ok(())
 }
-

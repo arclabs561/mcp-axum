@@ -1,0 +1,6 @@
+# Clippy configuration for mcp-axum
+
+# Deny warnings by default in CI
+# Allow some pedantic lints that are too strict for this project
+avoid-breaking-exported-api = false
+

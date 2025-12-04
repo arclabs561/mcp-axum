@@ -1,14 +1,13 @@
 //! Integration tests for MCP server HTTP endpoints.
 
-use mcp_axum::{McpServer, Tool, Resource, Prompt};
 use async_trait::async_trait;
-use serde_json::Value;
-use std::sync::Arc;
 use axum::{
     body::Body,
     http::{Request, StatusCode},
 };
 use http_body_util::BodyExt;
+use mcp_axum::{McpServer, Prompt, Resource, Tool};
+use serde_json::Value;
 use tower::util::ServiceExt;
 
 struct EchoTool;
@@ -156,12 +155,16 @@ impl Prompt for FailingPrompt {
 
 fn create_test_server() -> axum::Router {
     let mut server = McpServer::new();
-    server.register_tool("echo".to_string(), Arc::new(EchoTool)).unwrap();
-    server.register_tool("failing".to_string(), Arc::new(FailingTool)).unwrap();
-    server.register_resource("test://resource".to_string(), Arc::new(TestResource)).unwrap();
-    server.register_resource("test://failing".to_string(), Arc::new(FailingResource)).unwrap();
-    server.register_prompt("greeting".to_string(), Arc::new(TestPrompt)).unwrap();
-    server.register_prompt("failing".to_string(), Arc::new(FailingPrompt)).unwrap();
+    server.register_tool("echo", EchoTool).unwrap();
+    server.register_tool("failing", FailingTool).unwrap();
+    server
+        .register_resource("test://resource", TestResource)
+        .unwrap();
+    server
+        .register_resource("test://failing", FailingResource)
+        .unwrap();
+    server.register_prompt("greeting", TestPrompt).unwrap();
+    server.register_prompt("failing", FailingPrompt).unwrap();
     server.router()
 }
 
@@ -205,11 +208,8 @@ async fn test_list_tools() {
     assert!(json["tools"].is_array());
     let tools = json["tools"].as_array().unwrap();
     assert_eq!(tools.len(), 2);
-    
-    let tool_names: Vec<&str> = tools
-        .iter()
-        .map(|t| t["name"].as_str().unwrap())
-        .collect();
+
+    let tool_names: Vec<&str> = tools.iter().map(|t| t["name"].as_str().unwrap()).collect();
     assert!(tool_names.contains(&"echo"));
     assert!(tool_names.contains(&"failing"));
 }
@@ -236,7 +236,7 @@ async fn test_call_tool_success() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::OK);
     let body = response.into_body().collect().await.unwrap().to_bytes();
     let json: Value = serde_json::from_slice(&body).unwrap();
@@ -268,7 +268,7 @@ async fn test_call_tool_missing_name() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::BAD_REQUEST);
     let body = response.into_body().collect().await.unwrap().to_bytes();
     let json: Value = serde_json::from_slice(&body).unwrap();
@@ -295,11 +295,15 @@ async fn test_call_tool_not_found() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::NOT_FOUND);
     let body = response.into_body().collect().await.unwrap().to_bytes();
     let json: Value = serde_json::from_slice(&body).unwrap();
-    assert!(json.get("message").and_then(|v| v.as_str()).unwrap_or("").contains("not found"));
+    assert!(json
+        .get("message")
+        .and_then(|v| v.as_str())
+        .unwrap_or("")
+        .contains("not found"));
 }
 
 #[tokio::test]
@@ -322,7 +326,7 @@ async fn test_call_tool_failure() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
     let body = response.into_body().collect().await.unwrap().to_bytes();
     let json: Value = serde_json::from_slice(&body).unwrap();
@@ -370,7 +374,7 @@ async fn test_read_resource_success() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::OK);
     let body = response.into_body().collect().await.unwrap().to_bytes();
     let json: Value = serde_json::from_slice(&body).unwrap();
@@ -397,7 +401,7 @@ async fn test_read_resource_missing_uri() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::BAD_REQUEST);
 }
 
@@ -420,7 +424,7 @@ async fn test_read_resource_not_found() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::NOT_FOUND);
 }
 
@@ -443,7 +447,7 @@ async fn test_read_resource_failure() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
 }
 
@@ -491,7 +495,7 @@ async fn test_get_prompt_success() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::OK);
     let body = response.into_body().collect().await.unwrap().to_bytes();
     let json: Value = serde_json::from_slice(&body).unwrap();
@@ -521,7 +525,7 @@ async fn test_get_prompt_with_default() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::OK);
     let body = response.into_body().collect().await.unwrap().to_bytes();
     let json: Value = serde_json::from_slice(&body).unwrap();
@@ -548,7 +552,7 @@ async fn test_get_prompt_missing_name() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::BAD_REQUEST);
 }
 
@@ -572,7 +576,7 @@ async fn test_get_prompt_not_found() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::NOT_FOUND);
 }
 
@@ -596,6 +600,6 @@ async fn test_get_prompt_failure() {
         )
         .await
         .unwrap();
-    
+
     assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
 }

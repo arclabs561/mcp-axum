@@ -31,7 +31,10 @@ Function description.
     let props = schema["properties"].as_object().unwrap();
     assert!(props.contains_key("query"));
     assert_eq!(props["query"]["type"], "string");
-    assert!(schema["required"].as_array().unwrap().contains(&"query".into()));
+    assert!(schema["required"]
+        .as_array()
+        .unwrap()
+        .contains(&"query".into()));
 }
 
 #[test]
@@ -52,7 +55,7 @@ Function description.
     assert_eq!(props["max_results"]["default"], 10);
     assert_eq!(props["verbose"]["type"], "boolean");
     assert_eq!(props["verbose"]["default"], false);
-    
+
     let required = schema["required"].as_array().unwrap();
     assert_eq!(required.len(), 1);
     assert!(required.contains(&"query".into()));
@@ -68,7 +71,8 @@ fn test_numeric_defaults() {
     let schema = extract_schema_from_docstring(docstring);
     let props = schema["properties"].as_object().unwrap();
     assert_eq!(props["count"]["default"], 42);
-    assert_eq!(props["ratio"]["default"], 3.14);
+    // Use std::f64::consts::PI for precision (test expects ~3.14)
+    assert!((props["ratio"]["default"].as_f64().unwrap() - std::f64::consts::PI).abs() < 0.01);
 }
 
 #[test]
@@ -165,7 +169,10 @@ Returns a JSON array of matching items.
     let schema = extract_schema_from_docstring(docstring);
     let props = schema["properties"].as_object().unwrap();
     assert_eq!(props.len(), 4);
-    assert!(schema["required"].as_array().unwrap().contains(&"query".into()));
+    assert!(schema["required"]
+        .as_array()
+        .unwrap()
+        .contains(&"query".into()));
 }
 
 #[test]
@@ -193,4 +200,3 @@ fn test_no_type_specified() {
     let props = schema["properties"].as_object().unwrap();
     assert_eq!(props["param"]["type"], "object");
 }
-

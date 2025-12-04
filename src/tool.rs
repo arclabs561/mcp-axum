@@ -121,13 +121,10 @@ pub trait Tool: Send + Sync {
     ///     .get("query")
     ///     .and_then(|v| v.as_str())
     ///     .ok_or_else(|| "Missing required parameter 'query'".to_string())?;
-    /// 
+    ///
     /// // Perform the tool's action...
     /// Ok(json!({ "result": "success" }))
     /// # }
     /// ```
     async fn call(&self, arguments: &Value) -> Result<Value, String>;
 }
-
-// Macro is now a proc macro - see src/macros.rs
-
