@@ -171,6 +171,16 @@ curl -X POST http://localhost:8080/tools/call \
 - `404` - Not found
 - `500` - Server error
 
+## Error Response
+
+```json
+{
+  "code": 400,
+  "message": "Missing required parameter 'text'",
+  "details": null
+}
+```
+
 ## Auth
 
 ```bash

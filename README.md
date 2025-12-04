@@ -109,7 +109,8 @@ trait Prompt: Send + Sync {
 Argument extraction:
 
 ```rust
-use mcp_axum::{extract_string, extract_integer_opt};
+use mcp_axum::{extract_string, extract_string_opt, extract_number, extract_number_opt,
+                extract_integer, extract_integer_opt, extract_bool, extract_bool_opt};
 
 let text = extract_string(args, "text")?;
 let limit = extract_integer_opt(args, "limit").unwrap_or(10);
@@ -123,7 +124,18 @@ use mcp_axum::test_tool;
 let result = test_tool(&tool, json!({"text": "hello"})).await?;
 ```
 
+Custom middleware:
+
+```rust
+use axum::middleware;
+
+let app = server.router()
+    .layer(middleware::from_fn(auth_middleware));
+```
+
 ## Configuration
+
+Defaults: 30s timeouts, 10MB max body size.
 
 ```rust
 use mcp_axum::{McpServer, ServerConfig};
@@ -131,6 +143,8 @@ use std::time::Duration;
 
 let config = ServerConfig::new()
     .with_tool_timeout(Duration::from_secs(60))
+    .with_resource_timeout(Duration::from_secs(30))
+    .with_prompt_timeout(Duration::from_secs(10))
     .with_max_body_size(20 * 1024 * 1024);
 
 let mut server = McpServer::with_config(config);
@@ -147,12 +161,13 @@ let server = McpServer::new()
 
 ## Features
 
-- Request timeouts (default: 30s)
+- Request timeouts (30s default)
 - JSON Schema validation
 - MCP spec validation
-- Request logging with IDs
+- Request logging with request IDs
 - Graceful shutdown
 - CORS enabled
+- Request body size limits (10MB default)
 
 ## Limitations
 

@@ -12,6 +12,8 @@ server.serve("0.0.0.0:8080").await?;
 
 ## Custom Config
 
+Defaults: 30s timeouts, 10MB max body size.
+
 ```rust
 use mcp_axum::{McpServer, ServerConfig};
 use std::time::Duration;
@@ -87,7 +89,7 @@ COPY --from=builder /app/target/release/my-server /usr/local/bin/
 CMD ["my-server"]
 ```
 
-## Auth Middleware
+## Custom Middleware
 
 ```rust
 use axum::middleware;
@@ -96,4 +98,4 @@ let app = server.router()
     .layer(middleware::from_fn(auth_middleware));
 ```
 
-See `examples/auth_middleware.rs`.
+See `examples/auth_middleware.rs` for auth example.
