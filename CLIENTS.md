@@ -99,11 +99,15 @@ GET /prompts/list
   "prompts": [{
     "name": "greeting",
     "description": "Greeting prompt",
-    "arguments": [{
-      "name": "name",
-      "description": "Name",
-      "required": false
-    }]
+    "arguments": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name"
+        }
+      }
+    }
   }]
 }
 ```

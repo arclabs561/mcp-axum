@@ -1,9 +1,9 @@
 //! # axum-mcp
 //!
-//! Axum-like framework for building Model Context Protocol (MCP) servers with HTTP transport.
+//! MCP server framework built on axum with HTTP transport.
 //!
-//! This crate provides an ergonomic framework for building MCP servers in Rust using `axum`.
-//! It supports docstring-driven schema extraction and type-safe trait-based handlers.
+//! Framework for building MCP servers in Rust using `axum`.
+//! Trait-based handlers for tools, resources, and prompts. Arguments use `serde_json::Value`.
 //!
 //! # Model Context Protocol (MCP)
 //!
@@ -52,7 +52,7 @@
 //! async fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     tracing_subscriber::fmt::init();
 //!     let mut server = McpServer::new();
-//!     server.register_tool("echo", EchoTool)?;  // No .to_string() or Arc::new() needed!
+//!     server.register_tool("echo", EchoTool)?;
 //!     server.serve("127.0.0.1:8080").await?;
 //!     Ok(())
 //! }
@@ -60,10 +60,9 @@
 //!
 //! # Features
 //!
-//! - HTTP transport with RESTful API endpoints
+//! - HTTP transport with REST endpoints
 //! - Trait-based implementation for tools, resources, and prompts
-//! - Optional docstring schema extraction
-//! - Built on `axum` for async HTTP handling
+//! - JSON Schema validation of tool arguments
 //! - Error handling with HTTP status codes
 
 #![warn(missing_docs)]
@@ -73,6 +72,28 @@ pub mod config;
 pub mod error;
 pub mod prompt;
 pub mod resource;
+/// Schema utilities for extracting JSON Schema from docstrings.
+///
+/// The `schema` module provides `extract_schema_from_docstring()` which can be used
+/// in your tool's `schema()` method to generate JSON Schema from Rust docstrings.
+///
+/// Example:
+/// ```rust,no_run
+/// use axum_mcp::{Tool, schema::extract_schema_from_docstring};
+/// use serde_json::Value;
+///
+/// struct MyTool;
+///
+/// impl Tool for MyTool {
+///     fn schema(&self) -> Value {
+///         extract_schema_from_docstring(r#"
+///             # Arguments
+///             * `text` - Input text (type: string)
+///         "#)
+///     }
+///     // ...
+/// }
+/// ```
 pub mod schema;
 pub mod server;
 #[cfg(feature = "testing")]

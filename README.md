@@ -1,6 +1,6 @@
 # axum-mcp
 
-HTTP transport for Model Context Protocol servers. Built on axum.
+HTTP transport for Model Context Protocol servers.
 
 ## What
 
@@ -51,8 +51,8 @@ impl Tool for EchoTool {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut server = McpServer::new();
-    server.register_tool("echo", EchoTool)?;
+    let server = McpServer::new()
+        .tool("echo", EchoTool)?;
     server.serve("127.0.0.1:8080").await?;
     Ok(())
 }
@@ -106,7 +106,7 @@ trait Prompt: Send + Sync {
 
 ## Utilities
 
-Argument extraction:
+Argument extraction helpers:
 
 ```rust
 use axum_mcp::{extract_string, extract_string_opt, extract_number, extract_number_opt,
@@ -131,6 +131,19 @@ use axum::middleware;
 
 let app = server.router()
     .layer(middleware::from_fn(auth_middleware));
+```
+
+Schema from docstrings (optional utility):
+
+```rust
+use axum_mcp::schema::extract_schema_from_docstring;
+
+fn schema(&self) -> Value {
+    extract_schema_from_docstring(r#"
+        # Arguments
+        * `text` - Input text (type: string)
+    "#)
+}
 ```
 
 ## Configuration
@@ -162,17 +175,34 @@ let server = McpServer::new()
 ## Features
 
 - Request timeouts (30s default)
-- JSON Schema validation
-- MCP spec validation
+- JSON Schema validation of tool arguments before execution
+- Validates tool names, resource URIs, and prompt names per MCP spec
 - Request logging with request IDs
 - Graceful shutdown
 - CORS enabled
 - Request body size limits (10MB default)
 
+## Error Handling
+
+Errors return HTTP status codes:
+- `400` - Bad request (invalid arguments, missing parameters, schema validation failed)
+- `404` - Not found (tool/resource/prompt doesn't exist)
+- `500` - Internal server error (tool/resource/prompt execution failed)
+
+Error response format:
+```json
+{
+  "code": 400,
+  "message": "Missing required parameter 'text'",
+  "details": null
+}
+```
+
 ## Limitations
 
 - No procedural macros (implement traits manually)
 - HTTP only (no stdio transport)
+- Arguments use `serde_json::Value` (not type-safe)
 
 ## Client Config
 
