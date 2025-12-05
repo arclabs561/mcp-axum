@@ -209,7 +209,7 @@ All examples compile and demonstrate real-world usage patterns.
 
 **Status:** ✅ **Ready for Publishing**
 
-The crate meets all crates.io requirements and follows Rust best practices:
+The crate meets all crates.io requirements and follows Rust conventions:
 - Complete metadata
 - Comprehensive documentation
 - Working examples
