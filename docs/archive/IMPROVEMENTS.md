@@ -36,7 +36,7 @@ let text = arguments
 
 **Solution**: Helper functions
 ```rust
-use mcp_axum::extract_arg;
+use axum_mcp::extract_arg;
 
 let text: String = extract_arg!(arguments, "text")?;
 let limit: Option<u64> = extract_arg_opt!(arguments, "limit");
@@ -62,7 +62,7 @@ curl http://localhost:8080/tools/list
 
 **Solution**: Test helpers module
 ```rust
-use mcp_axum::testing::*;
+use axum_mcp::testing::*;
 
 #[tokio::test]
 async fn test_my_tool() {

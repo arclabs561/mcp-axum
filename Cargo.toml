@@ -1,5 +1,5 @@
 [package]
-name = "mcp-axum"
+name = "axum-mcp"
 version = "0.2.0"
 edition = "2021"
 rust-version = "1.75"
@@ -7,15 +7,15 @@ license = "MIT OR Apache-2.0"
 description = "HTTP-based MCP server framework for Rust, built on axum"
 keywords = ["mcp", "model-context-protocol", "axum", "server", "agent", "ai"]
 categories = ["web-programming", "api-bindings"]
-repository = "https://github.com/arclabs561/mcp-axum"
-homepage = "https://docs.rs/mcp-axum"
-documentation = "https://docs.rs/mcp-axum"
+repository = "https://github.com/arclabs561/axum-mcp"
+homepage = "https://docs.rs/axum-mcp"
+documentation = "https://docs.rs/axum-mcp"
 readme = "README.md"
 authors = ["Arc <attobop@gmail.com>"]
 
 [lib]
 # proc-macro = true  # Commented out - this is a library crate, not a proc-macro crate
-# Proc macros will be in a separate mcp-axum-macros crate
+# Proc macros will be in a separate axum-mcp-macros crate
 
 [dependencies]
 axum = "0.7"
@@ -34,7 +34,7 @@ uuid = { version = "1", features = ["v4"] }
 [features]
 default = []
 testing = []
-# Future: macros feature for procedural macro support via mcp-axum-macros crate
+# Future: macros feature for procedural macro support via axum-mcp-macros crate
 
 [dev-dependencies]
 tokio-test = "0.4"

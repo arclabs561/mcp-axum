@@ -7,7 +7,7 @@
 //! - Graceful shutdown
 
 use async_trait::async_trait;
-use mcp_axum::{McpServer, ServerConfig, Tool};
+use axum_mcp::{McpServer, ServerConfig, Tool};
 use serde_json::Value;
 use std::{env, time::Duration};
 

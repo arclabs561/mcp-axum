@@ -5,8 +5,8 @@ use axum::{
     body::Body,
     http::{Request, StatusCode},
 };
+use axum_mcp::{McpServer, Tool};
 use http_body_util::BodyExt;
-use mcp_axum::{McpServer, Tool};
 use serde_json::Value;
 use std::sync::Arc;
 use tower::util::ServiceExt;

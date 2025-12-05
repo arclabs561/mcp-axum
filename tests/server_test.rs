@@ -1,7 +1,7 @@
 //! Basic unit tests for MCP server components.
 
 use async_trait::async_trait;
-use mcp_axum::{McpServer, Prompt, Resource, Tool};
+use axum_mcp::{McpServer, Prompt, Resource, Tool};
 use serde_json::Value;
 
 struct TestTool;

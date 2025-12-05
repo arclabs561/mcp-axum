@@ -12,7 +12,7 @@
 /// # Examples
 ///
 /// ```
-/// use mcp_axum::validate_tool_name;
+/// use axum_mcp::validate_tool_name;
 ///
 /// assert!(validate_tool_name("getUser").is_ok());
 /// assert!(validate_tool_name("DATA_EXPORT_v2").is_ok());
@@ -56,7 +56,7 @@ pub fn validate_tool_name(name: &str) -> Result<(), String> {
 /// # Examples
 ///
 /// ```
-/// use mcp_axum::validate_resource_uri;
+/// use axum_mcp::validate_resource_uri;
 ///
 /// assert!(validate_resource_uri("file:///path/to/file.txt").is_ok());
 /// assert!(validate_resource_uri("http://example.com/data").is_ok());
@@ -134,7 +134,7 @@ pub fn validate_resource_uri(uri: &str) -> Result<(), String> {
 /// # Examples
 ///
 /// ```
-/// use mcp_axum::validate_prompt_name;
+/// use axum_mcp::validate_prompt_name;
 ///
 /// assert!(validate_prompt_name("summarize_text").is_ok());
 /// assert!(validate_prompt_name("CODE_GEN_v1").is_ok());

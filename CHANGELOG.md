@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0] - 2025-01-XX
 
+### Changed
+- **Renamed crate from `mcp-axum` to `axum-mcp`** - Aligns with Rust ecosystem convention (`axum-` prefix for Axum extensions)
+
 ### Added
 - **Builder pattern for registration** - Chainable `.tool()`, `.resource()`, and `.prompt()` methods for ergonomic server setup
 - **Structured error types** - `ToolError` enum for better error context and HTTP status mapping

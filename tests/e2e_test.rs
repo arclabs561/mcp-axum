@@ -5,8 +5,8 @@ use axum::{
     body::Body,
     http::{Request, StatusCode},
 };
+use axum_mcp::{extract_string, McpServer, Tool};
 use http_body_util::BodyExt;
-use mcp_axum::{extract_string, McpServer, Tool};
 use serde_json::{json, Value};
 use tower::util::ServiceExt;
 

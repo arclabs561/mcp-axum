@@ -5,8 +5,8 @@ use axum::{
     body::Body,
     http::{Request, StatusCode},
 };
+use axum_mcp::{McpServer, ServerConfig, Tool};
 use http_body_util::BodyExt;
-use mcp_axum::{McpServer, ServerConfig, Tool};
 use serde_json::Value;
 use std::time::Duration;
 use tokio::time::sleep;

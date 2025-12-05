@@ -7,7 +7,7 @@
 //! # Example
 //!
 //! ```rust,no_run
-//! use mcp_axum::Tool;
+//! use axum_mcp::Tool;
 //! use async_trait::async_trait;
 //! use serde_json::Value;
 //!

@@ -6,7 +6,7 @@
 //! - Different MIME types based on file extensions
 
 use async_trait::async_trait;
-use mcp_axum::{McpServer, Resource};
+use axum_mcp::{McpServer, Resource};
 use std::path::PathBuf;
 
 /// File system resource that reads files from disk.

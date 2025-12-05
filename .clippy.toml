@@ -1,4 +1,4 @@
-# Clippy configuration for mcp-axum
+# Clippy configuration for axum-mcp
 
 # Deny warnings by default in CI
 # Allow some pedantic lints that are too strict for this project

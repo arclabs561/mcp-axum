@@ -134,7 +134,7 @@ impl McpServer {
     /// # Example
     ///
     /// ```rust,no_run
-    /// # use mcp_axum::{McpServer, Tool};
+    /// # use axum_mcp::{McpServer, Tool};
     /// # use async_trait::async_trait;
     /// # use serde_json::Value;
     /// # struct EchoTool;
@@ -148,7 +148,7 @@ impl McpServer {
     /// # }
     /// let server = McpServer::new()
     ///     .tool("echo", EchoTool)?;
-    /// # Ok::<(), mcp_axum::McpError>(())
+    /// # Ok::<(), axum_mcp::McpError>(())
     /// ```
     pub fn tool(
         mut self,
@@ -170,7 +170,7 @@ impl McpServer {
     /// # Example
     ///
     /// ```rust,no_run
-    /// # use mcp_axum::{McpServer, Resource};
+    /// # use axum_mcp::{McpServer, Resource};
     /// # use async_trait::async_trait;
     /// # struct HelloResource;
     /// # #[async_trait]
@@ -182,7 +182,7 @@ impl McpServer {
     /// # }
     /// let server = McpServer::new()
     ///     .resource("hello://world", HelloResource)?;
-    /// # Ok::<(), mcp_axum::McpError>(())
+    /// # Ok::<(), axum_mcp::McpError>(())
     /// ```
     pub fn resource(
         mut self,
@@ -204,7 +204,7 @@ impl McpServer {
     /// # Example
     ///
     /// ```rust,no_run
-    /// # use mcp_axum::{McpServer, Prompt};
+    /// # use axum_mcp::{McpServer, Prompt};
     /// # use async_trait::async_trait;
     /// # use serde_json::Value;
     /// # struct GreetingPrompt;
@@ -218,7 +218,7 @@ impl McpServer {
     /// # }
     /// let server = McpServer::new()
     ///     .prompt("greeting", GreetingPrompt)?;
-    /// # Ok::<(), mcp_axum::McpError>(())
+    /// # Ok::<(), axum_mcp::McpError>(())
     /// ```
     pub fn prompt(
         mut self,
@@ -305,7 +305,7 @@ impl McpServer {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use mcp_axum::McpServer;
+    /// use axum_mcp::McpServer;
     /// use tokio::signal;
     ///
     /// # async fn example() -> Result<(), Box<dyn std::error::Error>> {

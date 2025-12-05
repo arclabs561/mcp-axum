@@ -5,7 +5,7 @@ use axum::{
     body::Body,
     http::{Request, StatusCode},
 };
-use mcp_axum::{McpServer, Tool};
+use axum_mcp::{McpServer, Tool};
 use serde_json::Value;
 use std::time::Instant;
 use tower::util::ServiceExt;

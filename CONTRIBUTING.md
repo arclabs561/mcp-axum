@@ -3,8 +3,8 @@
 ## Setup
 
 ```bash
-git clone https://github.com/arclabs561/mcp-axum.git
-cd mcp-axum
+git clone https://github.com/arclabs561/axum-mcp.git
+cd axum-mcp
 cargo test
 ```
 

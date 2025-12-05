@@ -14,7 +14,7 @@ use serde_json::Value;
 /// # Example
 ///
 /// ```rust,no_run
-/// use mcp_axum::extract_string;
+/// use axum_mcp::extract_string;
 /// use serde_json::json;
 ///
 /// let args = json!({"text": "hello"});
@@ -34,7 +34,7 @@ pub fn extract_string(arguments: &Value, param: &str) -> Result<String, String> 
 /// # Example
 ///
 /// ```rust,no_run
-/// use mcp_axum::extract_string_opt;
+/// use axum_mcp::extract_string_opt;
 /// use serde_json::json;
 ///
 /// let args = json!({"text": "hello"});
@@ -56,7 +56,7 @@ pub fn extract_string_opt(arguments: &Value, param: &str) -> Option<String> {
 /// # Example
 ///
 /// ```rust,no_run
-/// use mcp_axum::extract_number;
+/// use axum_mcp::extract_number;
 /// use serde_json::json;
 ///
 /// let args = json!({"limit": 10});

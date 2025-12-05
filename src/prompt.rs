@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```rust,no_run
-//! use mcp_axum::Prompt;
+//! use axum_mcp::Prompt;
 //! use async_trait::async_trait;
 //! use serde_json::{Value, json};
 //!

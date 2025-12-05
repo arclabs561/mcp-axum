@@ -8,7 +8,7 @@
 //! - Custom middleware usage
 
 use async_trait::async_trait;
-use mcp_axum::{McpServer, Prompt, Resource, Tool};
+use axum_mcp::{McpServer, Prompt, Resource, Tool};
 use serde_json::{json, Value};
 use std::collections::HashMap;
 use std::sync::Arc;

@@ -1,4 +1,4 @@
-//! # mcp-axum
+//! # axum-mcp
 //!
 //! Axum-like framework for building Model Context Protocol (MCP) servers with HTTP transport.
 //!
@@ -17,7 +17,7 @@
 //! # Example
 //!
 //! ```rust,no_run
-//! use mcp_axum::{extract_string, McpServer, Tool};
+//! use axum_mcp::{extract_string, McpServer, Tool};
 //! use async_trait::async_trait;
 //! use serde_json::Value;
 //!
@@ -82,9 +82,9 @@ pub mod tool_error;
 pub mod utils;
 pub mod validation;
 
-// Procedural macros will be in a separate mcp-axum-macros crate
+// Procedural macros will be in a separate axum-mcp-macros crate
 // #[cfg(feature = "macros")]
-// pub use mcp_axum_macros::{mcp_tool, mcp_resource, mcp_prompt};
+// pub use axum_mcp_macros::{mcp_tool, mcp_resource, mcp_prompt};
 
 pub use config::ServerConfig;
 pub use error::{ErrorResponse, HttpError, McpError};

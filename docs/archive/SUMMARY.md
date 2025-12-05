@@ -69,7 +69,7 @@ Updated `basic_server.rs` to use utility functions, demonstrating cleaner code.
 
 ### 4. Testing Utilities (HIGH impact, MEDIUM effort)
 ```rust
-use mcp_axum::testing::*;
+use axum_mcp::testing::*;
 
 #[tokio::test]
 async fn test_my_tool() {

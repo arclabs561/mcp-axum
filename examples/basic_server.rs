@@ -4,7 +4,7 @@
 //! resources, and prompts.
 
 use async_trait::async_trait;
-use mcp_axum::{extract_string, extract_string_opt, McpServer, Prompt, Resource, Tool};
+use axum_mcp::{extract_string, extract_string_opt, McpServer, Prompt, Resource, Tool};
 use serde_json::Value;
 
 /// Example tool: Echo

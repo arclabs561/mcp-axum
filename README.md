@@ -1,4 +1,4 @@
-# mcp-axum
+# axum-mcp
 
 HTTP transport for Model Context Protocol servers. Built on axum.
 
@@ -19,13 +19,13 @@ Not for stdio-based clients (e.g., Claude Desktop local mode).
 
 ```toml
 [dependencies]
-mcp-axum = "0.2"
+axum-mcp = "0.2"
 ```
 
 ## Example
 
 ```rust
-use mcp_axum::{extract_string, McpServer, Tool};
+use axum_mcp::{extract_string, McpServer, Tool};
 use async_trait::async_trait;
 use serde_json::Value;
 
@@ -109,7 +109,7 @@ trait Prompt: Send + Sync {
 Argument extraction:
 
 ```rust
-use mcp_axum::{extract_string, extract_string_opt, extract_number, extract_number_opt,
+use axum_mcp::{extract_string, extract_string_opt, extract_number, extract_number_opt,
                 extract_integer, extract_integer_opt, extract_bool, extract_bool_opt};
 
 let text = extract_string(args, "text")?;
@@ -119,7 +119,7 @@ let limit = extract_integer_opt(args, "limit").unwrap_or(10);
 Testing (with `testing` feature):
 
 ```rust
-use mcp_axum::test_tool;
+use axum_mcp::test_tool;
 
 let result = test_tool(&tool, json!({"text": "hello"})).await?;
 ```
@@ -138,7 +138,7 @@ let app = server.router()
 Defaults: 30s timeouts, 10MB max body size.
 
 ```rust
-use mcp_axum::{McpServer, ServerConfig};
+use axum_mcp::{McpServer, ServerConfig};
 use std::time::Duration;
 
 let config = ServerConfig::new()
@@ -189,7 +189,7 @@ let server = McpServer::new()
 
 ## Docs
 
-- [API](https://docs.rs/mcp-axum)
+- [API](https://docs.rs/axum-mcp)
 - [Configuration](CONFIGURATION.md)
 - [Client Integration](CLIENTS.md)
 - [Examples](examples/)

@@ -23,7 +23,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Copy binary from builder
-COPY --from=builder /app/target/release/mcp-axum /usr/local/bin/mcp-server
+COPY --from=builder /app/target/release/axum-mcp /usr/local/bin/mcp-server
 
 # Expose port
 EXPOSE 8080

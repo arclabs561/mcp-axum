@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```rust,no_run
-//! use mcp_axum::Resource;
+//! use axum_mcp::Resource;
 //! use async_trait::async_trait;
 //!
 //! struct HelloResource;

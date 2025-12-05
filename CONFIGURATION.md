@@ -3,7 +3,7 @@
 ## Server Setup
 
 ```rust
-use mcp_axum::McpServer;
+use axum_mcp::McpServer;
 
 let mut server = McpServer::new();
 server.register_tool("tool", MyTool)?;
@@ -15,7 +15,7 @@ server.serve("0.0.0.0:8080").await?;
 Defaults: 30s timeouts, 10MB max body size.
 
 ```rust
-use mcp_axum::{McpServer, ServerConfig};
+use axum_mcp::{McpServer, ServerConfig};
 use std::time::Duration;
 
 let config = ServerConfig::new()

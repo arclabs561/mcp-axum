@@ -172,7 +172,7 @@ async fn echo(text: String) -> Result<Value, String> {
 - Schema generation from types
 
 **Trade-offs:**
-- Requires separate crate (`mcp-axum-macros`)
+- Requires separate crate (`axum-mcp-macros`)
 - Significant implementation effort (1-2 weeks)
 - Need to maintain two crates
 - Only helps 10% of users (experienced Rust devs)

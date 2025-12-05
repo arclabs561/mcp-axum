@@ -1,6 +1,6 @@
 # Archive: Development Analysis Documents
 
-This directory contains historical analysis and planning documents from the development of `mcp-axum`. These files were used to inform design decisions and improvements but are no longer actively maintained.
+This directory contains historical analysis and planning documents from the development of `axum-mcp`. These files were used to inform design decisions and improvements but are no longer actively maintained.
 
 ## Contents
 

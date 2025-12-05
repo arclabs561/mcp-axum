@@ -6,7 +6,7 @@
 //! - Proper cleanup
 
 use async_trait::async_trait;
-use mcp_axum::{McpServer, ServerConfig, Tool};
+use axum_mcp::{McpServer, ServerConfig, Tool};
 use serde_json::{json, Value};
 use std::time::Duration;
 use tokio::signal;

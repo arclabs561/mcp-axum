@@ -1,6 +1,6 @@
 //! Unit tests for schema generation.
 
-use mcp_axum::schema::{extract_schema_from_docstring, schema_from_type};
+use axum_mcp::schema::{extract_schema_from_docstring, schema_from_type};
 
 #[test]
 fn test_empty_docstring() {

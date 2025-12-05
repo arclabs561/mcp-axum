@@ -4,7 +4,7 @@
 //! for a more ergonomic server setup.
 
 use async_trait::async_trait;
-use mcp_axum::{extract_string, McpServer, Prompt, Resource, Tool};
+use axum_mcp::{extract_string, McpServer, Prompt, Resource, Tool};
 use serde_json::Value;
 
 struct EchoTool;

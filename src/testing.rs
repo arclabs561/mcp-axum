@@ -5,7 +5,7 @@
 //! # Example
 //!
 //! ```rust,no_run
-//! use mcp_axum::{test_tool, Tool};
+//! use axum_mcp::{test_tool, Tool};
 //! use async_trait::async_trait;
 //! use serde_json::{json, Value};
 //!
@@ -40,7 +40,7 @@ use serde_json::Value;
 /// # Example
 ///
 /// ```rust,no_run
-/// use mcp_axum::{test_tool, Tool};
+/// use axum_mcp::{test_tool, Tool};
 /// use async_trait::async_trait;
 /// use serde_json::{json, Value};
 ///

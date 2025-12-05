@@ -6,7 +6,7 @@
 //! - Protected endpoints
 
 use axum::{extract::Request, http::StatusCode, middleware::Next, response::Response};
-use mcp_axum::{extract_string, McpServer, Tool};
+use axum_mcp::{extract_string, McpServer, Tool};
 use serde_json::Value;
 use std::{collections::HashSet, env};
 

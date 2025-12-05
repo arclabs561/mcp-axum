@@ -7,7 +7,7 @@
 //! - Using in-memory SQLite for demonstration
 
 use async_trait::async_trait;
-use mcp_axum::{McpServer, Tool};
+use axum_mcp::{McpServer, Tool};
 use serde_json::{json, Value};
 use std::collections::HashMap;
 use std::sync::Arc;

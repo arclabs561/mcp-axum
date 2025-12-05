@@ -1,6 +1,6 @@
 # Client Integration
 
-HTTP API reference for connecting to mcp-axum servers.
+HTTP API reference for connecting to axum-mcp servers.
 
 ## Endpoints
 

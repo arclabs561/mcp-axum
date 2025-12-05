@@ -1,6 +1,6 @@
 //! Edge case tests for validation functions.
 
-use mcp_axum::{validate_prompt_name, validate_resource_uri, validate_tool_name};
+use axum_mcp::{validate_prompt_name, validate_resource_uri, validate_tool_name};
 
 #[test]
 fn test_tool_name_edge_cases() {
