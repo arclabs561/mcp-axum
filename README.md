@@ -217,13 +217,6 @@ Error response format:
 }
 ```
 
-## Docs
-
-- [API](https://docs.rs/axum-mcp)
-- [Configuration](CONFIGURATION.md)
-- [Client Integration](CLIENTS.md)
-- [Examples](examples/)
-
 ## License
 
 MIT OR Apache-2.0
